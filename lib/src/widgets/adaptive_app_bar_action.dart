@@ -29,6 +29,7 @@ class AdaptiveAppBarAction {
     this.spacerAfter = ToolbarSpacerType.none,
     this.prominent = false,
     this.tintColor,
+    this.badgeCount,
   }) : assert(
          iosSymbol != null ||
              icon != null ||
@@ -102,6 +103,10 @@ class AdaptiveAppBarAction {
   /// - iOS <26 / Android: Ignored
   final Color? tintColor;
 
+  /// iPhone Duo side strip (99+ above 99). Null or 0 shows no badge. Other
+  /// toolbars ignore it.
+  final int? badgeCount;
+
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -112,7 +117,8 @@ class AdaptiveAppBarAction {
         other.title == title &&
         other.label == label &&
         other.prominent == prominent &&
-        other.tintColor == tintColor;
+        other.tintColor == tintColor &&
+        other.badgeCount == badgeCount;
   }
 
   @override
@@ -124,6 +130,7 @@ class AdaptiveAppBarAction {
     label,
     prominent,
     tintColor,
+    badgeCount,
   );
 
   /// Convert action to map for native platform channel (iOS 26+ only)

@@ -30,6 +30,9 @@ class GlassCapsuleItem {
         title: action.iosSymbol == null ? action.title : null,
         label: action.effectiveLabel,
         tint: action.tintColor,
+        // the native capsule already draws item
+        // badges (used by tabs); pass the action's count through.
+        badge: action.badgeCount,
         fallback:
             action.iconWidget ??
             (action.icon != null ? Icon(action.icon, size: 22) : null),

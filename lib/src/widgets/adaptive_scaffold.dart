@@ -94,6 +94,7 @@ class AdaptiveScaffold extends StatefulWidget {
     this.scaffoldKey,
     this.useHeroBackButton = true,
     this.useFixedToolbar = true,
+    this.replicateBodyPerTab = true,
     this.tabBarHidden = false,
   });
 
@@ -180,6 +181,12 @@ class AdaptiveScaffold extends StatefulWidget {
   /// own, where it is. Scaffolds shown in a sheet, dialog or popup (any route
   /// that is not a page) do this automatically.
   final bool useFixedToolbar;
+
+  /// the scaffold normally builds one copy of [body] per tab (in an
+  /// IndexedStack). Set to false when [body] already switches between the
+  /// tabs itself (e.g. a PageView): the body is then built once. Needed when
+  /// the body holds a GlobalKey, which may only be mounted once.
+  final bool replicateBodyPerTab;
 
   /// Whether to hide the native tab bar (iOS 26+ only).
   /// Use this to hide the tab bar when showing modal bottom sheets
@@ -384,7 +391,9 @@ class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
       final bodyType = widget.body?.runtimeType.toString() ?? '';
       final isNavigationShell = bodyType.contains('StatefulNavigationShell');
 
-      if (isNavigationShell) {
+      // replicateBodyPerTab == false builds the body
+      // once, like a navigation shell.
+    if (isNavigationShell || !widget.replicateBodyPerTab) {
         // GoRouter's StatefulNavigationShell already manages children
         // Don't replicate, just use it directly
         childrenList = [widget.body ?? const SizedBox.shrink()];

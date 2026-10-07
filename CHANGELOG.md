@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] (keithcheehui fork, based on 1.0.1)
+* **NEW**: `AdaptiveScaffold.replicateBodyPerTab` (default `true`). With `false`, the iOS 26 native-toolbar path builds `body` once instead of once per tab, for bodies that switch tabs themselves (e.g. a `PageView`) or hold a `GlobalKey`. Lets a tab layout show per-tab toolbar actions next to its tabs in the iPhone Duo vertical bar
+* **NEW**: `badgeCount` on `AdaptiveAppBarAction`: a red count badge (99+ above 99) on the action in the iPhone Duo vertical bar, drawn by the native capsule like tab badges. Null or 0 shows none. Also part of `==` / `hashCode`
+
 ## [1.0.1]
 * **FIX**: 📱 **iPhone Duo: the tab bar now lives in the vertical bar**, at the bottom of it, the way the system lays it out. In 1.0.0 it stayed at the bottom of the screen. The strip now reads, from the top: status cluster, back button, toolbar items, tab bar. Measured against a native UIKit app on the iPhone Duo simulator
 * **FIX**: iPhone Duo: the vertical bar follows the hardware through every rotation. On the cover display in landscape it stays on the side, including the rotation that puts the strip on the left, and it keeps clear of the camera wherever the rotation puts it (top or bottom of the strip). In 1.0.0 rotating fell back to horizontal bars. The inner display in portrait keeps horizontal bars, as it does in UIKit
